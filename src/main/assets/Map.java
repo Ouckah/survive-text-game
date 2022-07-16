@@ -101,7 +101,23 @@ public class Map
         }
 
         map[x][y] = 'X';
-     }
+    }
+
+    public void resetSlot(int[] pos)
+    {
+        int x = pos[0];
+        int y = pos[1];
+
+        map[x][y] = '_';
+    }
+
+    public void setSlot(int[] pos, char icon) // pos = [x, y] ; icon = '_' or '+' or '/'
+    {
+        int x = pos[0];
+        int y = pos[1];
+
+        map[x][y] = icon;
+    }
 
     public String toString()
     {

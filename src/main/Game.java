@@ -146,34 +146,89 @@ public class Game
 
         String response = scan.nextLine();
 
+        int x = player.getPosition()[0];
+        int y = player.getPosition()[1];
+
+        char[][] map_ = map.getMap();
+
+        map.resetSlot(new int[] { x, y }); // reset current player pos on map
+
         // UP
         if (response.toUpperCase().equals("W"))
         {
+            if (x > 0)
+            {
+                player.setPosition(new int[] { x - 1, y });
+            }
 
+            else
+            {
+                System.out.println("Map Border Reached!");
+                System.out.println();
+
+                move();
+            }
         }
         
         // DOWN
         else if (response.toUpperCase().equals("S"))
         {
-            
+            if (x <= map_.length - 1)
+            {
+                player.setPosition(new int[] { x + 1, y });
+            }
+
+            else
+            {
+                System.out.println("Map Border Reached!");
+                System.out.println();
+
+                move();
+            }
         }
 
         // LEFT
         else if (response.toUpperCase().equals("A"))
         {
-            
+            if (y > 0)
+            {
+                player.setPosition(new int[] { x, y - 1 });
+            }
+
+            else
+            {
+                System.out.println("Map Border Reached!");
+                System.out.println();
+
+                move();
+            }
         }
 
         // RIGHT
         else if (response.toUpperCase().equals("D"))
         {
-            
+            if (y <= map_.length - 1)
+            {
+                player.setPosition(new int[] { x, y + 1 });
+            }
+
+            else
+            {
+                System.out.println("Map Border Reached!");
+                System.out.println();
+
+                move();
+            }
         }
 
         else
         {
             move();
         }
+
+        map.update();
+
+        turn();
 
     }
 
