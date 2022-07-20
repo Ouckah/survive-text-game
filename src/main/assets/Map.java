@@ -91,12 +91,14 @@ public class Map
         {
             if (currentPosition == '+') // item
             {
+                // TEMP: Find random weapon; SOON: Find random item
+                player.addWeapon();
 
             }
 
             else if (currentPosition == '/') // enemy
             {
-
+                System.out.println("Enemy found!");
             }
         }
 

@@ -6,15 +6,14 @@ import java.util.HashMap;
 
 import src.main.assets.*;
 import src.main.assets.databases.WeaponDatabase;
+import src.main.assets.items.Weapon;
 
 public class Game
 {
     // game assets
     private static Player player = new Player();
     private static Map map = new Map();
-    private static HashMap<String, Weapon> weaponData = new WeaponDatabase().getDatabase();
-
-    private static int moves = 0;
+    public static HashMap<String, Weapon> weaponData = new WeaponDatabase().getDatabase();
     
     public static void main(String[] args)
     {
@@ -93,7 +92,8 @@ public class Game
         System.out.print("[ (M)ove ] \t---\t");
         System.out.print("[ (I)tems ] \t---\t");
         System.out.print("[ (S)tats ] \t---\t");
-        System.out.println("[ (C)heck Map ]");
+        System.out.print("[ (C)heck Map ] \t---\t");
+        System.out.println("[ (E)xit ]");
         System.out.println();
     }
 
@@ -114,7 +114,9 @@ public class Game
 
         else if (response.toUpperCase().equals("I") || response.toUpperCase().equals("ITEMS"))
         {
+            printInventory();
 
+            turn();
         }
 
         else if (response.toUpperCase().equals("S") || response.toUpperCase().equals("STATS"))
@@ -129,6 +131,12 @@ public class Game
             printMap();
 
             turn();
+        }
+
+        else if (response.toUpperCase().equals("E") || response.toUpperCase().equals("EXIT"))
+        {
+            System.exit(0);
+            return;
         }
 
         else
@@ -227,9 +235,22 @@ public class Game
         }
 
         map.update();
+        player.addMove();
 
         turn();
 
+    }
+
+    private static void printInventory()
+    {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("INVENTORY:");
+        System.out.println("---------");
+        System.out.println();
+
+        System.out.println(player.getInventory());
+        scan.nextLine();
     }
 
     private static void printStats()
@@ -238,7 +259,6 @@ public class Game
         System.out.println("------");
         System.out.println();
         System.out.println();
-
     }
 
     private static void printMap()

@@ -1,6 +1,6 @@
-package src.main.assets;
+package src.main.assets.items;
 
-public class Item 
+public class Potion extends Item
 {
     // #region Constructors
 

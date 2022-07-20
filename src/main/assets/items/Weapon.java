@@ -1,14 +1,8 @@
-package src.main.assets;
+package src.main.assets.items;
 
-public class Weapon 
+public class Weapon extends Item 
 {
-    private int id;
-    static int instanceCount = 0;
-
-    private String name;
-    private String description;
     private int damage;
-    private float chance; // out of 100
     private int turnSpawn; // turn number that weapon will spawn as an item
 
     // #region Constructors
@@ -29,23 +23,20 @@ public class Weapon
     // #endregion
 
     // #region Get Methods
-    public String getName()
-    {
-        return name;
-    }
-
-    public String getDescription()
-    {
-        return description;
-    }
 
     public int getDamage()
     {
         return damage;
     }
+    
     // #endregion
 
     // #region Set Methods
     
     // #endregion
+
+    public String toString()
+    {
+        return name + "\n\n" + description + "\n\n";
+    }
 }

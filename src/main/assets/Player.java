@@ -1,14 +1,23 @@
 package src.main.assets;
 
 import java.util.Random;
+import java.util.HashMap;
+
+import src.main.assets.databases.WeaponDatabase;
+import src.main.assets.items.Weapon;
 
 public class Player 
 {
     private int[] pos = new int[2]; // [x, y]
 
+    private int moveCount;
+
     private int maxHealth;
     private int health;
     private Weapon weapon;
+    private Inventory inventory = new Inventory();
+
+    public static WeaponDatabase weaponData = new WeaponDatabase();
 
     private Map map;
 
@@ -17,6 +26,8 @@ public class Player
     public Player()
     {
         pos = new int[] { 0, 0 };
+
+        moveCount = 0;
 
         maxHealth = 10;
         health = 10;
@@ -33,6 +44,16 @@ public class Player
     public int[] getPosition()
     {
         return pos;
+    }
+
+    public int getMoveCount()
+    {
+        return moveCount;
+    }
+
+    public Inventory getInventory()
+    {
+        return inventory;
     }
 
     // #endregion
@@ -73,4 +94,16 @@ public class Player
     }
 
     // #endregion
+
+    public void addMove()
+    {
+        moveCount++;
+    }
+
+    // random weapon
+    public void addWeapon()
+    {
+        Weapon weapon = weaponData.getWeapon();
+        inventory.add(weapon);
+    }
 }
