@@ -181,7 +181,7 @@ public class Game
         // DOWN
         else if (response.toUpperCase().equals("S"))
         {
-            if (x <= map_.length - 1)
+            if (x < map_.length - 1)
             {
                 player.setPosition(new int[] { x + 1, y });
             }
@@ -215,7 +215,7 @@ public class Game
         // RIGHT
         else if (response.toUpperCase().equals("D"))
         {
-            if (y <= map_.length - 1)
+            if (y < map_.length - 1)
             {
                 player.setPosition(new int[] { x, y + 1 });
             }
@@ -255,10 +255,37 @@ public class Game
 
     private static void printStats()
     {
+        Scanner scan = new Scanner(System.in);
+
         System.out.println("STATS:");
         System.out.println("------");
         System.out.println();
+
+        // print health
+        int healthBar = (int) Math.ceil(((float) player.getHealth() / player.getMaxHealth() * 40));
+
+        System.out.println("Health: " + player.getHealth() + " / " + player.getMaxHealth());
+        System.out.print("[ ");
+
+        for (int i = 0; i < healthBar; i++)
+        {
+            System.out.print("\\\\");
+        }
+        for (int i = 0; i < 40 - healthBar; i++)
+        {
+            System.out.println("  ");
+        }
+
+        System.out.println(" ]");
+
         System.out.println();
+        System.out.println();
+
+        // print weapon
+        System.out.print("Weapon: ");
+        System.out.println(player.getWeapon());
+
+        scan.nextLine();
     }
 
     private static void printMap()

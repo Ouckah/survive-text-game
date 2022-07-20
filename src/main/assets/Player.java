@@ -51,6 +51,21 @@ public class Player
         return moveCount;
     }
 
+    public int getMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public int getHealth()
+    {
+        return health;
+    }
+
+    public Weapon getWeapon()
+    {
+        return weapon;
+    }
+
     public Inventory getInventory()
     {
         return inventory;
