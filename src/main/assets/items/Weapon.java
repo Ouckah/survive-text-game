@@ -37,6 +37,8 @@ public class Weapon extends Item
 
     public String toString()
     {
-        return name + "\n\n" + description + "\n\n";
+        return name + "\n\n" + 
+        description + "\n\n" + 
+        "Deals " + damage + " damage."+ "\n\n";
     }
 }
