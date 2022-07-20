@@ -4,7 +4,7 @@ import src.main.assets.items.Weapon;
 
 public class Stick 
 {
-    public static String name = "STICK";
+    public static String name = "Stick";
     public static Weapon weapon = new Weapon
     (
         "Stick",
@@ -13,4 +13,6 @@ public class Stick
         60,
         1
     );
+
+    // #region Get Methods
 }
