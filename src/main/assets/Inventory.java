@@ -2,6 +2,7 @@ package src.main.assets;
 
 import java.util.ArrayList;
 
+import src.main.assets.databases.WeaponDatabase;
 import src.main.assets.items.Item;
 
 public class Inventory 
@@ -21,6 +22,12 @@ public class Inventory
 
     // #region Get Methods
 
+    public Item get (int index)
+    {
+        Item item = inventory.get(index);
+        return item;
+    } 
+
     public ArrayList<Item> getInventory()
     {
         return inventory;
@@ -29,6 +36,11 @@ public class Inventory
     public int getSpace()
     {
         return space;
+    }
+
+    public int getCount() // returns the amount of items in inventory
+    {
+        return inventory.size();
     }
 
     // #endregion

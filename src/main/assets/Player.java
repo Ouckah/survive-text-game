@@ -35,6 +35,10 @@ public class Player
         weapon = null;
 
         map = null;
+
+        // initialize inventory + weapon
+        inventory.add(weaponData.getWeapon("Fists"));
+        setWeapon((Weapon)inventory.get(0));
     }
 
     // #endregion
@@ -118,7 +122,7 @@ public class Player
     // random weapon
     public void addWeapon()
     {
-        Weapon weapon = weaponData.getWeapon();
+        Weapon weapon = weaponData.getRandomWeapon();
         inventory.add(weapon);
     }
 }

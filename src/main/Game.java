@@ -33,7 +33,6 @@ public class Game
     {
         // initialize player
         player.setMap(map); // set the map
-        player.setWeapon(weaponData.get("Fists")); // set weapon to fists
         player.setRandomPosition(); // sets a random position in the map
 
         // initialize map
@@ -94,6 +93,13 @@ public class Game
         System.out.print("[ (S)tats ] \t---\t");
         System.out.print("[ (C)heck Map ] \t---\t");
         System.out.println("[ (E)xit ]");
+        System.out.println();
+    }
+
+    private static void inventoryButtons() // buttons for inventory
+    {
+        System.out.print("[ (U)se Item ] \t---\t");
+        System.out.print("[ (R)emove Item ]");
         System.out.println();
     }
 
@@ -250,8 +256,66 @@ public class Game
         System.out.println();
 
         System.out.println(player.getInventory());
-        scan.nextLine();
+
+        inventoryButtons();
+
+        String response = scan.nextLine();
+
+        // use item
+        if (response.toUpperCase() == "U" || response.toUpperCase() == "USE ITEM")
+        {
+            printUseItem();
+        }
+        // remove item
+        if (response.toUpperCase() == "R" || response.toUpperCase() == "REMOVE ITEM")
+        {
+            printRemoveItem();
+        }
     }
+
+    // #region Inventory Methods
+
+    private static void printUseItem()
+    {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println(player.getInventory());
+        System.out.println("Which item would you like to use? \n");
+        
+        String response = scan.nextLine();
+        int index;
+
+        // validate response
+        try 
+        {
+            index = Integer.parseInt(response);
+        }
+        catch (NumberFormatException e)
+        {
+            System.out.println("Please enter a valid index!\n");
+            printUseItem();
+        }
+
+        index = Integer.parseInt(response); // reinstantiate
+
+        if (index > 0 && index <= player.getInventory().getCount()) // checks if index is in bounds of inventory
+        {
+
+        }
+        else
+        {
+            System.out.println("Please enter a valid index!\n");
+            printUseItem();
+        }
+
+    }
+
+    private static void printRemoveItem()
+    {
+
+    }
+
+    // #endregion
 
     private static void printStats()
     {
