@@ -7,12 +7,14 @@ import src.main.assets.items.Item;
 public class Inventory 
 {
     private ArrayList<Item> inventory;
+    private int space;
 
     // #region Constructors
 
     public Inventory()
     {
         inventory = new ArrayList<Item>();
+        space = 5;
     }
 
     // #endregion
@@ -24,11 +26,19 @@ public class Inventory
         return inventory;
     }
 
+    public int getSpace()
+    {
+        return space;
+    }
+
     // #endregion
 
     // #region Set Methods
 
-        
+    public void setSpace (int space)
+    {
+        this.space = space;
+    }
 
     // #endregion
 
@@ -39,6 +49,7 @@ public class Inventory
 
     public String toString()
     {
+        System.out.println(inventory.size() + " / " + space + "\n");
         inventory.forEach
         (
             (item) -> System.out.println(item)
