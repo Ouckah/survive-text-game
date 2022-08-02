@@ -22,6 +22,11 @@ public class Inventory
 
     // #region Get Methods
 
+    public int count() // returns the amount of items in inventory
+    {
+        return inventory.size();
+    }
+
     public Item get (int index)
     {
         Item item = inventory.get(index);
@@ -38,11 +43,6 @@ public class Inventory
         return space;
     }
 
-    public int getCount() // returns the amount of items in inventory
-    {
-        return inventory.size();
-    }
-
     // #endregion
 
     // #region Set Methods
@@ -57,6 +57,11 @@ public class Inventory
     public void add (Item item)
     {
         inventory.add(item);
+    }
+
+    public Item remove (int index)
+    {
+        return inventory.remove(index);
     }
 
     public String toString()

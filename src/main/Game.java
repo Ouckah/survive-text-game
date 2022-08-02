@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import src.main.assets.*;
 import src.main.assets.databases.WeaponDatabase;
+import src.main.assets.items.Item;
 import src.main.assets.items.Weapon;
 
 public class Game
@@ -16,7 +17,7 @@ public class Game
     public static HashMap<String, Weapon> weaponData = new WeaponDatabase().getDatabase();
     
     public static void main(String[] args)
-    {
+    {   
         clear();
 
         welcome();
@@ -262,14 +263,32 @@ public class Game
         String response = scan.nextLine();
 
         // use item
-        if (response.toUpperCase() == "U" || response.toUpperCase() == "USE ITEM")
+        if (response.toUpperCase().equals("U") || response.toUpperCase().equals("USE ITEM"))
         {
-            printUseItem();
+            if (player.getInventory().count() > 1)
+            {
+                printUseItem();
+            }
+            else
+            {
+                System.out.println("\nYou only have one item!\n");
+                scan.nextLine();
+                printInventory();
+            }
         }
         // remove item
-        if (response.toUpperCase() == "R" || response.toUpperCase() == "REMOVE ITEM")
+        else if (response.toUpperCase().equals("R") || response.toUpperCase().equals("REMOVE ITEM"))
         {
-            printRemoveItem();
+            if (player.getInventory().count() > 1)
+            {
+                printRemoveItem();
+            }
+            else
+            {
+                System.out.println("\nYou only have one item!\n");
+                scan.nextLine();
+                printInventory();
+            }
         }
     }
 
@@ -283,7 +302,7 @@ public class Game
         System.out.println("Which item would you like to use? \n");
         
         String response = scan.nextLine();
-        int index;
+        int index = -1;
 
         // validate response
         try 
@@ -292,26 +311,59 @@ public class Game
         }
         catch (NumberFormatException e)
         {
-            System.out.println("Please enter a valid index!\n");
-            printUseItem();
+            printInventory();
         }
 
-        index = Integer.parseInt(response); // reinstantiate
-
-        if (index > 0 && index <= player.getInventory().getCount()) // checks if index is in bounds of inventory
+        if (index > 0 && index <= player.getInventory().count()) // checks if index is in bounds of inventory
         {
+            Item item = player.getInventory().remove(index);
 
+            // make condition "if item == Weapon"
+            try 
+            {
+                player.setWeapon((Weapon) item);
+            }
+            catch (Error e)
+            {
+                System.out.println("Selected item is not a weapon.");
+                printUseItem();
+            }
         }
         else
         {
-            System.out.println("Please enter a valid index!\n");
-            printUseItem();
+            printInventory();
         }
 
     }
 
     private static void printRemoveItem()
     {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println(player.getInventory());
+        System.out.println("Which item would you like to remove? \n");
+
+        String response = scan.nextLine();
+        int index = -1;
+
+        // validate response
+        try 
+        {
+            index = Integer.parseInt(response);
+        }
+        catch (NumberFormatException e)
+        {
+            printInventory();
+        }
+
+        if (index > 0 && index <= player.getInventory().count()) // checks if index is in bounds of inventory
+        {
+            player.getInventory().remove(index);
+        }
+        else
+        {
+            printInventory();
+        }
 
     }
 

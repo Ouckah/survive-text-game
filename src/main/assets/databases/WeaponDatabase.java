@@ -23,7 +23,7 @@ public class WeaponDatabase
         database.put(Stick.name, Stick.weapon);
 
         // initialize ids and weapons Dictionaries
-        String[] weaponNames = (String[]) database.keySet().toArray(); // get an array of all weapon names
+        Object[] weaponNames = database.keySet().toArray(); // get an array of all weapon names
 
         for (int i = 0; i < weaponNames.length; i++)
         {
