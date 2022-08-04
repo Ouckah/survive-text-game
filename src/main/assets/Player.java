@@ -164,7 +164,7 @@ public class Player
 
             // #region print health
 
-            System.out.println("Health: " + health + " / " + maxHealth);
+            System.out.println("\nHealth: " + health + " / " + maxHealth);
             System.out.print("[ ");
 
             int healthBar = (int) Math.ceil(((float) health / maxHealth * 40));
@@ -180,7 +180,7 @@ public class Player
 
             System.out.println(" ]");
 
-            System.out.println(enemy.getName() + " health: " + enemy.getHealth() + " / " + enemy.getMaxHealth());
+            System.out.println("\n" + enemy.getName() + " health: " + enemy.getHealth() + " / " + enemy.getMaxHealth());
             System.out.print("[ ");
 
             int enemyHealthBar = (int) Math.ceil(((float) enemy.getHealth() / enemy.getMaxHealth() * 40));
@@ -202,7 +202,7 @@ public class Player
     
             if (response.toUpperCase().equals("A") || response.toUpperCase().equals("ATTACK"))
             {
-                System.out.println("\n\n\n\n\n\n\n\n\n\n");
+                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
                 System.out.println("You attacked the " + enemy.getName() + " for " + weapon.getDamage() + " damage.");
 
                 enemy.damage(weapon.getDamage());
@@ -230,13 +230,13 @@ public class Player
 
         if (isDead)
         {
-            System.out.println("\n\n\n\n\n\n\n\n\n\n");
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
             System.out.println("You Died!");
         }
 
         if (enemy.isDead())
         {
-            System.out.println("\n\n\n\n\n\n\n\n\n\n");
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
             System.out.println("You defeated the " + enemy.getName() + "!");
 
             scan.nextLine();
