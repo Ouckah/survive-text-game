@@ -43,6 +43,16 @@ public class Enemy
         return description;
     }
 
+    public int getHealth() 
+    {
+        return health;
+    }
+
+    public int getMaxHealth() 
+    {
+        return maxHealth;
+    }
+
     public boolean isDead() 
     {
         return isDead;
@@ -80,7 +90,6 @@ public class Enemy
         isDead = true;
     }
     
-    // true - dead; false - still alive
     public void damage (int damage)
     {
         health -= damage;

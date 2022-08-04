@@ -162,23 +162,69 @@ public class Player
         {
             battleButtons();
 
+            // #region print health
+
+            System.out.println("Health: " + health + " / " + maxHealth);
+            System.out.print("[ ");
+
+            int healthBar = (int) Math.ceil(((float) health / maxHealth * 40));
+
+            for (int i = 0; i < healthBar; i++)
+            {
+                System.out.print("\\\\");
+            }
+            for (int i = 0; i < 40 - healthBar; i++)
+            {
+                System.out.print("  ");
+            }
+
+            System.out.println(" ]");
+
+            System.out.println(enemy.getName() + " health: " + enemy.getHealth() + " / " + enemy.getMaxHealth());
+            System.out.print("[ ");
+
+            int enemyHealthBar = (int) Math.ceil(((float) enemy.getHealth() / enemy.getMaxHealth() * 40));
+
+            for (int i = 0; i < enemyHealthBar; i++)
+            {
+                System.out.print("\\\\");
+            }
+            for (int i = 0; i < 40 - enemyHealthBar; i++)
+            {
+                System.out.print("  ");
+            }
+
+            System.out.println(" ]");
+
+            // #endregion
+
             String response = scan.nextLine();
     
-            if (response.toUpperCase().equals("A"))
+            if (response.toUpperCase().equals("A") || response.toUpperCase().equals("ATTACK"))
             {
                 System.out.println("\n\n\n\n\n\n\n\n\n\n");
                 System.out.println("You attacked the " + enemy.getName() + " for " + weapon.getDamage() + " damage.");
+
+                enemy.damage(weapon.getDamage());
                 // possibility: stun effect, poison, etc.
                 // possibility: missing
 
                 scan.nextLine();
-    
-                enemy.turn(this);
+                
+                if (!enemy.isDead()) // check if enemy died to attack
+                {
+                    enemy.turn(this);
+                }
             }
-            else if (response.toUpperCase().equals("U"))
+            else if (response.toUpperCase().equals("U") || response.toUpperCase().equals("USE ITEM"))
             {
     
             }
+            else if (response.toUpperCase().equals("F") || response.toUpperCase().equals("FLEE"))
+            {
+    
+            }
+
             battle(enemy);
         }
 
@@ -193,6 +239,7 @@ public class Player
             System.out.println("\n\n\n\n\n\n\n\n\n\n");
             System.out.println("You defeated the " + enemy.getName() + "!");
 
+            scan.nextLine();
         }
     }
 

@@ -389,7 +389,7 @@ public class Game
         }
         for (int i = 0; i < 40 - healthBar; i++)
         {
-            System.out.println("  ");
+            System.out.print("  ");
         }
 
         System.out.println(" ]");
