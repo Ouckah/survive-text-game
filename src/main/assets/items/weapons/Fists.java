@@ -11,6 +11,7 @@ public class Fists
         "The ol' fashioned way.",
         1,
         0,
-        1
+        1,
+        false
     );
 }

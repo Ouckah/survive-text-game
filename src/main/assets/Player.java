@@ -1,7 +1,7 @@
 package src.main.assets;
 
 import java.util.Random;
-import java.util.HashMap;
+import java.util.Scanner;
 
 import src.main.assets.databases.WeaponDatabase;
 import src.main.assets.items.Weapon;
@@ -14,8 +14,11 @@ public class Player
 
     private int maxHealth;
     private int health;
+
     private Weapon weapon;
     private Inventory inventory = new Inventory();
+
+    private boolean isDead = false;
 
     public static WeaponDatabase weaponData = new WeaponDatabase();
 
@@ -75,6 +78,11 @@ public class Player
         return inventory;
     }
 
+    public boolean isDead() 
+    {
+        return isDead;
+    }
+
     // #endregion
 
     // #region Set Methods
@@ -112,6 +120,11 @@ public class Player
         this.map = map;
     }
 
+    public void kill()
+    {
+        isDead = true;
+    }
+
     // #endregion
 
     public void addMove()
@@ -120,9 +133,77 @@ public class Player
     }
 
     // random weapon
-    public void addWeapon()
+    public void addWeapon(Weapon weapon)
     {
-        Weapon weapon = weaponData.getRandomWeapon();
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.println();
+        System.out.println("You picked up a " + weapon.getName() + "!");
+        System.out.println("Info: " + weapon.getName() + " - " + weapon.getDescription());
+
+        // possibility: ask whether player wants to keep it or not
+        scan.nextLine();
+
         inventory.add(weapon);
     }
+
+    public void damage(int damage)
+    {
+        health -= damage;
+    }
+
+    // #region Battle Functions
+
+    public void battle(Enemy enemy)
+    {
+        Scanner scan = new Scanner(System.in);
+
+        if (!isDead && !enemy.isDead())
+        {
+            battleButtons();
+
+            String response = scan.nextLine();
+    
+            if (response.toUpperCase().equals("A"))
+            {
+                System.out.println("\n\n\n\n\n\n\n\n\n\n");
+                System.out.println("You attacked the " + enemy.getName() + " for " + weapon.getDamage() + " damage.");
+                // possibility: stun effect, poison, etc.
+                // possibility: missing
+
+                scan.nextLine();
+    
+                enemy.turn(this);
+            }
+            else if (response.toUpperCase().equals("U"))
+            {
+    
+            }
+            battle(enemy);
+        }
+
+        if (isDead)
+        {
+            System.out.println("\n\n\n\n\n\n\n\n\n\n");
+            System.out.println("You Died!");
+        }
+
+        if (enemy.isDead())
+        {
+            System.out.println("\n\n\n\n\n\n\n\n\n\n");
+            System.out.println("You defeated the " + enemy.getName() + "!");
+
+        }
+    }
+
+    private static void battleButtons() // buttons for inventory
+    {
+        System.out.print("[ (A)ttack ] \t---\t");
+        System.out.print("[ (U)se Item ] \t---\t");
+        System.out.print("[ (F)lee ]");
+        System.out.println();
+    }
+
+
+    // #endregion
 }

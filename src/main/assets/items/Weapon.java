@@ -5,9 +5,11 @@ public class Weapon extends Item
     private int damage;
     private int turnSpawn; // turn number that weapon will spawn as an item
 
+    private boolean isObtainable; // determines if the player can find this weapon naturally
+
     // #region Constructors
 
-    public Weapon(String name, String description, int damage, float chance, int turnSpawn) 
+    public Weapon(String name, String description, int damage, float chance, int turnSpawn, boolean isObtainable) 
     {
         // increment IDs
         id = instanceCount;
@@ -18,6 +20,7 @@ public class Weapon extends Item
         this.damage = damage;
         this.chance = chance;
         this.turnSpawn = turnSpawn;
+        this.isObtainable = isObtainable;
     }
 
     // #endregion
@@ -27,6 +30,11 @@ public class Weapon extends Item
     public int getDamage()
     {
         return damage;
+    }
+
+    public boolean isObtainable()
+    {
+        return isObtainable;
     }
     
     // #endregion

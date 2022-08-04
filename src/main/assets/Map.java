@@ -2,6 +2,9 @@ package src.main.assets;
 
 import java.util.Random;
 
+import src.main.assets.databases.*;
+import src.main.assets.items.Weapon;
+
 public class Map
 {
     /*
@@ -18,7 +21,10 @@ public class Map
     private Random rand = new Random();
     private char[][] map = new char[10][10];
 
-    private Player player; // [x, y]
+    private Player player;
+
+    private static WeaponDatabase weaponData = new WeaponDatabase();
+    private static EnemyDatabase enemyData = new EnemyDatabase();
 
     // #region Constructors
 
@@ -91,14 +97,25 @@ public class Map
         {
             if (currentPosition == '+') // item
             {
-                // TEMP: Find random weapon; SOON: Find random item
-                player.addWeapon();
-
+                Weapon weapon = weaponData.getRandomWeapon();
+                player.addWeapon(weapon);
             }
 
             else if (currentPosition == '/') // enemy
             {
-                System.out.println("Enemy found!");
+                // simulate battle
+                Enemy enemy = enemyData.spawn(); // spawn enemy
+
+                Weapon weapon = weaponData.getRandomWeapon(); // set enemy weapon
+                enemy.setWeapon(weapon);
+
+                enemy.setLevel(1); // set enemy level
+
+                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                System.out.println("You ran into a " + enemy.getName() + "!");
+                System.out.println("Info: " + enemy.getName() + " - " + enemy.getDescription() + "\n\n\n");
+
+                player.battle(enemy);
             }
         }
 

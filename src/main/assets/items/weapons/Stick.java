@@ -11,7 +11,8 @@ public class Stick
         "Just a regular stick.",
         2,
         60,
-        1
+        1,
+        true
     );
 
     // #region Get Methods

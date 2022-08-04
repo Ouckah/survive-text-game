@@ -50,7 +50,13 @@ public class WeaponDatabase
     {
         Object[] databaseKeys = database.keySet().toArray();
         Object key = databaseKeys[new Random().nextInt(databaseKeys.length)];
-        return database.get(key);
+
+        Weapon weapon = database.get(key);
+        if (weapon.isObtainable()) // if weapon can be found in the wild return it
+        {
+            return database.get(key);
+        }
+        return getRandomWeapon();
     }
 
     // #endregion
