@@ -19,6 +19,7 @@ public class Player
     private Inventory inventory = new Inventory();
 
     private boolean isDead = false;
+    private boolean isBattling = false;
 
     public static WeaponDatabase weaponData = new WeaponDatabase();
 
@@ -83,6 +84,11 @@ public class Player
         return isDead;
     }
 
+    public boolean isBattling() 
+    {
+        return isBattling;
+    }
+
     // #endregion
 
     // #region Set Methods
@@ -125,6 +131,16 @@ public class Player
         isDead = true;
     }
 
+    public void startBattle()
+    {
+        isBattling = true;
+    }
+
+    public void endBattle()
+    {
+        isBattling = false;
+    }
+
     // #endregion
 
     public void addMove()
@@ -158,88 +174,124 @@ public class Player
     {
         Scanner scan = new Scanner(System.in);
 
-        if (!isDead && !enemy.isDead())
+        if (isBattling)
         {
-            battleButtons();
-
-            // #region print health
-
-            System.out.println("\nHealth: " + health + " / " + maxHealth);
-            System.out.print("[ ");
-
-            int healthBar = (int) Math.ceil(((float) health / maxHealth * 40));
-
-            for (int i = 0; i < healthBar; i++)
+            if (!isDead && !enemy.isDead())
             {
-                System.out.print("\\\\");
+                battleButtons();
+
+                // #region print health
+
+                System.out.println("\nHealth: " + health + " / " + maxHealth);
+                System.out.print("[ ");
+
+                int healthBar = (int) Math.ceil(((float) health / maxHealth * 40));
+
+                for (int i = 0; i < healthBar; i++)
+                {
+                    System.out.print("\\\\");
+                }
+                for (int i = 0; i < 40 - healthBar; i++)
+                {
+                    System.out.print("  ");
+                }
+
+                System.out.println(" ]");
+
+                System.out.println("\n" + enemy.getName() + " health: " + enemy.getHealth() + " / " + enemy.getMaxHealth());
+                System.out.print("[ ");
+
+                int enemyHealthBar = (int) Math.ceil(((float) enemy.getHealth() / enemy.getMaxHealth() * 40));
+
+                for (int i = 0; i < enemyHealthBar; i++)
+                {
+                    System.out.print("\\\\");
+                }
+                for (int i = 0; i < 40 - enemyHealthBar; i++)
+                {
+                    System.out.print("  ");
+                }
+
+                System.out.println(" ]");
+
+                // #endregion
+
+                String response = scan.nextLine();
+        
+                if (response.toUpperCase().equals("A") || response.toUpperCase().equals("ATTACK"))
+                {
+                    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                    System.out.println("You attacked the " + enemy.getName() + " for " + weapon.getDamage() + " damage.");
+
+                    enemy.damage(weapon.getDamage());
+                    // possibility: stun effect, poison, etc.
+                    // possibility: missing
+
+                    scan.nextLine();
+                    
+                    if (!enemy.isDead()) // check if enemy died to attack
+                    {
+                        enemy.turn(this);
+                    }
+                }
+                else if (response.toUpperCase().equals("U") || response.toUpperCase().equals("USE ITEM"))
+                {
+        
+                }
+                else if (response.toUpperCase().equals("F") || response.toUpperCase().equals("FLEE"))
+                {
+                    /*
+                    * 60% chance of fleeing
+                    * 40% chance of unsuccessfully fleeing
+                    */
+
+                    // possibility: unable to flee from certain enemies
+                    Random rand = new Random();
+                    float FLEE_CHANCE = 0.6f;
+
+                    float chance = rand.nextFloat();
+                    if (chance < FLEE_CHANCE)
+                    {
+                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                        System.out.println("You successfully fled from the " + enemy.getName() + "!");
+                        
+                        scan.nextLine();
+            
+                        endBattle();
+                    }
+                    else
+                    {
+                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                        System.out.println("The " + enemy.getName() + " stopped you from fleeing!");
+
+                        scan.nextLine();
+
+                        enemy.turn(this);
+                    }
+                }
+
+                battle(enemy);
             }
-            for (int i = 0; i < 40 - healthBar; i++)
-            {
-                System.out.print("  ");
-            }
 
-            System.out.println(" ]");
-
-            System.out.println("\n" + enemy.getName() + " health: " + enemy.getHealth() + " / " + enemy.getMaxHealth());
-            System.out.print("[ ");
-
-            int enemyHealthBar = (int) Math.ceil(((float) enemy.getHealth() / enemy.getMaxHealth() * 40));
-
-            for (int i = 0; i < enemyHealthBar; i++)
-            {
-                System.out.print("\\\\");
-            }
-            for (int i = 0; i < 40 - enemyHealthBar; i++)
-            {
-                System.out.print("  ");
-            }
-
-            System.out.println(" ]");
-
-            // #endregion
-
-            String response = scan.nextLine();
-    
-            if (response.toUpperCase().equals("A") || response.toUpperCase().equals("ATTACK"))
+            if (isDead)
             {
                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
-                System.out.println("You attacked the " + enemy.getName() + " for " + weapon.getDamage() + " damage.");
-
-                enemy.damage(weapon.getDamage());
-                // possibility: stun effect, poison, etc.
-                // possibility: missing
+                System.out.println("You Died!");
 
                 scan.nextLine();
-                
-                if (!enemy.isDead()) // check if enemy died to attack
-                {
-                    enemy.turn(this);
-                }
+
+                endBattle();
             }
-            else if (response.toUpperCase().equals("U") || response.toUpperCase().equals("USE ITEM"))
+
+            if (enemy.isDead())
             {
-    
+                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                System.out.println("You defeated the " + enemy.getName() + "!");
+
+                scan.nextLine();
+
+                endBattle();
             }
-            else if (response.toUpperCase().equals("F") || response.toUpperCase().equals("FLEE"))
-            {
-    
-            }
-
-            battle(enemy);
-        }
-
-        if (isDead)
-        {
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
-            System.out.println("You Died!");
-        }
-
-        if (enemy.isDead())
-        {
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
-            System.out.println("You defeated the " + enemy.getName() + "!");
-
-            scan.nextLine();
         }
     }
 

@@ -33,6 +33,12 @@ public class Enemy
         this.description = description;
     }
 
+    public Enemy (Enemy enemy)
+    {
+        this.name = enemy.name;
+        this.description = enemy.description;
+    }
+
     public String getName() 
     {
         return name;
@@ -67,6 +73,11 @@ public class Enemy
         health = maxHealth;
     }
 
+    public void setHealth (int health)
+    {
+        this.health = health;
+    }
+
     public void setWeapon (Weapon weapon)
     {
         this.weapon = weapon;
@@ -76,13 +87,24 @@ public class Enemy
     {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("\n\n\n\n\n\n\n\n\n\n");
-        System.out.println(name + " hit you for " + weapon.getDamage() + " damage!");
-        player.damage(weapon.getDamage());
+        attack(player);
 
         scan.nextLine();
 
         player.battle(this);
+    }
+
+    public void attack (Player player)
+    {
+        System.out.println("\n\n\n\n\n\n\n\n\n\n");
+        System.out.println(name + " hit you for " + weapon.getDamage() + " damage!");
+        player.damage(weapon.getDamage());
+
+        // check if attack killed player
+        if (player.getHealth() <= 0)
+        {
+            player.kill();
+        }
     }
 
     public void kill()

@@ -104,6 +104,8 @@ public class Map
             else if (currentPosition == '/') // enemy
             {
                 // simulate battle
+                player.startBattle();
+
                 Enemy enemy = enemyData.spawn(); // spawn enemy
 
                 Weapon weapon = weaponData.getRandomWeapon(); // set enemy weapon

@@ -42,8 +42,9 @@ public class EnemyDatabase
         Object[] databaseKeys = database.keySet().toArray();
         Object key = databaseKeys[new Random().nextInt(databaseKeys.length)];
 
-        Enemy enemy = database.get(key);
-        enemy.setLevel(1);
+        Enemy enemyIns = database.get(key);
+
+        Enemy enemy = new Enemy (enemyIns);
 
         return enemy;
     }
