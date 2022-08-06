@@ -3,6 +3,7 @@ package src.main.assets;
 import java.util.Random;
 
 import src.main.assets.databases.*;
+import src.main.assets.items.Item;
 import src.main.assets.items.Weapon;
 
 public class Map
@@ -25,6 +26,7 @@ public class Map
 
     private static WeaponDatabase weaponData = new WeaponDatabase();
     private static EnemyDatabase enemyData = new EnemyDatabase();
+    private static UseableDatabase useableData = new UseableDatabase();
 
     // #region Constructors
 
@@ -97,8 +99,23 @@ public class Map
         {
             if (currentPosition == '+') // item
             {
-                Weapon weapon = weaponData.getRandomWeapon();
-                player.addWeapon(weapon);
+                /*
+                 * 50% chance of weapon
+                 * 50% chance of useable
+                 */
+                float COIN_FLIP = 0.5f;
+
+                float chance = rand.nextFloat();
+                if (chance < COIN_FLIP)
+                {
+                    Weapon weapon = weaponData.getRandomWeapon();
+                    player.addWeapon(weapon);
+                }
+                else
+                {
+                    Item useable = useableData.getRandomUseable();
+                    player.addUseable(useable);
+                }
             }
 
             else if (currentPosition == '/') // enemy

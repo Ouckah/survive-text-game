@@ -2,8 +2,8 @@ package src.main.assets;
 
 import java.util.ArrayList;
 
-import src.main.assets.databases.WeaponDatabase;
 import src.main.assets.items.Item;
+import src.main.assets.items.Weapon;
 
 public class Inventory 
 {
@@ -64,13 +64,27 @@ public class Inventory
         return inventory.remove(index);
     }
 
+    public void printItems()
+    {
+        for (int i = 0; i < inventory.size(); i++)
+        {
+            if (inventory.get(i) instanceof Item && !(inventory.get(i) instanceof Weapon)) // if item is not a weapon
+            {
+                System.out.print("[" + i + "]: ");
+                System.out.println(inventory.get(i));    
+            }
+        }
+    }
+
     public String toString()
     {
         System.out.println(inventory.size() + " / " + space + "\n");
-        inventory.forEach
-        (
-            (item) -> System.out.println(item)
-        );
+
+        for (int i = 0; i < inventory.size(); i++)
+        {
+            System.out.print("[" + i + "]: ");
+            System.out.println(inventory.get(i));
+        }
 
         return "";
     }

@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import src.main.assets.databases.WeaponDatabase;
+import src.main.assets.items.Item;
 import src.main.assets.items.Weapon;
 
 public class Player 
@@ -148,7 +149,6 @@ public class Player
         moveCount++;
     }
 
-    // random weapon
     public void addWeapon(Weapon weapon)
     {
         Scanner scan = new Scanner(System.in);
@@ -161,6 +161,20 @@ public class Player
         scan.nextLine();
 
         inventory.add(weapon);
+    }
+
+    public void addUseable(Item useable)
+    {
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.println();
+        System.out.println("You picked up a " + useable.getName() + "!");
+        System.out.println("Info: " + useable.getName() + " - " + useable.getDescription());
+
+        // possibility: ask whether player wants to keep it or not
+        scan.nextLine();
+
+        inventory.add(useable);
     }
 
     public void damage(int damage)
@@ -212,12 +226,13 @@ public class Player
                     System.out.print("  ");
                 }
 
-                System.out.println(" ]");
+                System.out.println(" ]\n");
 
                 // #endregion
 
                 String response = scan.nextLine();
-        
+                
+                // ATTACK
                 if (response.toUpperCase().equals("A") || response.toUpperCase().equals("ATTACK"))
                 {
                     System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -234,10 +249,17 @@ public class Player
                         enemy.turn(this);
                     }
                 }
+
+                // USE ITEM
                 else if (response.toUpperCase().equals("U") || response.toUpperCase().equals("USE ITEM"))
                 {
-        
+                    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                    inventory.printItems();
+
+                    printUseItem();
                 }
+
+                // FLEE
                 else if (response.toUpperCase().equals("F") || response.toUpperCase().equals("FLEE"))
                 {
                     /*
@@ -295,7 +317,7 @@ public class Player
         }
     }
 
-    private static void battleButtons() // buttons for inventory
+    private void battleButtons() // buttons for inventory
     {
         System.out.print("[ (A)ttack ] \t---\t");
         System.out.print("[ (U)se Item ] \t---\t");
@@ -303,6 +325,53 @@ public class Player
         System.out.println();
     }
 
+    private void printUseItem()
+    {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("What item would you like to use?\n\n");
+
+        String response = scan.nextLine();
+        int index = -1;
+
+        // validate response
+        try 
+        {
+            index = Integer.parseInt(response);
+        }
+        catch (NumberFormatException e)
+        {
+            System.out.println("Invalid index given.\n\n");
+            printUseItem();
+        }
+
+        if (index > 0 && index <= inventory.count()) // checks if index is in bounds of inventory
+        {
+            Item useable = inventory.get(index);
+
+            if (!(useable instanceof Weapon))
+            {
+                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                System.out.println("You used the " + useable.getName() + ".");
+
+                scan.nextLine();
+
+                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
+                return;
+            }
+            else
+            {
+                System.out.println("Item is not useable.\n\n");
+                printUseItem();
+            }
+        }
+        else
+        {
+            System.out.println("Index out of bounds of inventory.\n\n");
+            printUseItem();
+        }
+    }
 
     // #endregion
 }
